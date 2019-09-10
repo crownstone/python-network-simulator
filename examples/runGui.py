@@ -20,8 +20,6 @@ simulatorCrownstones = [
     SimulatorCrownstone("crownstone3", 10,   5), # X, Y positions in meters relative to zeroPoint on Map
 ]
 
-#mesh topology
-
 # create a custom interaction module
 interactionModule = TrainingAndTesting("Test")
 
@@ -32,11 +30,5 @@ a.loadUserData(userModule)
 a.loadConfig(config)
 a.loadRooms(rooms)
 
-b = Simulator()
-b.loadInteractionModule(interactionModule)
-b.loadCrownstones(simulatorCrownstones)
-b.loadConfig(config)
-a.loadSimulator(b) # this will load the user module into the simulator as a broadcaster.
-
-a.startSimulation(2)
+a.run()
 

@@ -223,7 +223,7 @@ class SimulationCore:
             self.receivedCounter += 1
             receiver.receiveMessage({"sender": message["senderId"], "payload": message["payload"], "ttl": message["ttl"] - 1}, rssi)
             
-            if random.random() < float(self.config["messageLossProbability"]):
+            if random.random() < float(self.config["messageLossProbability"]) or True:
                 message["repeat"] -= 1
                 if message["repeat"] < 0:
                     return MessageState.FAILED
@@ -298,6 +298,7 @@ class SimulationCore:
                 "receiverId": crownstoneId,
                 "sentTime":   self.t,
                 "ttl":        ttl,
+                "repeat":     messageData["repeat"],
                 "processed":  False
             }
         

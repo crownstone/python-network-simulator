@@ -34,9 +34,19 @@ a.loadRooms(rooms)
 
 b = Simulator()
 b.loadInteractionModule(interactionModule)
+b.loadBroadcasters(simulatorCrownstones)
 b.loadCrownstones(simulatorCrownstones)
 b.loadConfig(config)
 a.loadSimulator(b) # this will load the user module into the simulator as a broadcaster.
 
-a.startSimulation(2)
+## running without gui interaction:
+a.initScreen()
+a.render(a.screen)
+a.getSingleStaticResult(True)
+#
+# a.makeScreenshot("test.png")
 
+# #
+# # results live in:
+# print(a.resultMap)
+# print(a.groundTruthMap)
