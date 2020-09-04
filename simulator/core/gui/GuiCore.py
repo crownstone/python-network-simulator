@@ -93,12 +93,12 @@ class GuiCore:
                 print("unknown keystroke", event.key)
 
     def _handleMouse(self, event):
-        if event.type == 5:  # mouse down
+        if event.type == 1025:  # mouse down
             self.mouseDown = True
             self.timeMouseDown = time.time()
             self.pressedMouseDown(event.pos)
 
-        elif event.type == 6:  # mouse up
+        elif event.type == 1026:  # mouse up
             self.mouseDown = False
             self.pressedMouseUp(event.pos)
             if time.time() - self.timeMouseDown < 0.5:
@@ -107,7 +107,7 @@ class GuiCore:
                     if self._posInRegion(event.pos, area["rect"]):
                         area["callback"]()
         
-        elif event.type == 4:  # mouse move
+        elif event.type == 1024:  # mouse move
             if self.mouseDown:
                 self.pressedMouseMove(event.pos)
         

@@ -180,7 +180,7 @@ class SimulationGui(GuiCore):
             self.simulator.continueSimulation(0.25, self.config["simulationTimeStepSeconds"])
             self.text(screen, "SIMULATION RUNNING", (0, 0, 0), (20, 20))
             self.text(screen, "T = " + "{:3.2f}".format(self.simulator.t), (0, 0, 0), (20, 50))
-    
+
         pygame.display.flip()
     
         # handle interaction events

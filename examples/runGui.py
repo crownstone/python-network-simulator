@@ -30,5 +30,10 @@ a.loadUserData(userModule)
 a.loadConfig(config)
 a.loadRooms(rooms)
 
+b = Simulator()
+b.loadCrownstones(simulatorCrownstones)
+b.loadConfig(config)
+a.loadSimulator(b) # this will load the user module into the simulator as a broadcaster.
+
 a.run()
 
