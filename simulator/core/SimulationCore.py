@@ -99,6 +99,10 @@ class SimulationCore:
         self.broadcasters = broadcasters
         for broadcaster in self.broadcasters:
             broadcaster.loadEventBus(self.eventBus)
+
+    def addBroadcaster(self, broadcaster):
+        self.broadcasters += [broadcaster]
+        self.broadcasters[-1].loadEventBus(self.eventBus)
             
             
     def resetSimulatorForResults(self):

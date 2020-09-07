@@ -100,13 +100,14 @@ class SimulationGui(GuiCore):
     def loadRooms(self, rooms):
         self.rooms = rooms
 
-    def loadBroadCaster(self, broadcaster):
+    def addBroadCaster(self, broadcaster):
         if self.userBroadcaster is not None:
             # cleanup?
             self.userBroadcaster = None
 
         self.userBroadcaster = broadcaster
-        self.simulator.loadBroadcasters([self.userBroadcaster])
+        self.userBroadcaster.gui = self
+        self.simulator.addBroadcaster(self.userBroadcaster)
         
     def startSimulation(self, duration = None):
         # allow for no user
@@ -115,7 +116,7 @@ class SimulationGui(GuiCore):
             broadcaster = SimUserBroadcaster(self.userData["address"], self)
             broadcaster.setBroadcastParameters(intervalMs=self.userData["intervalMs"], payload=self.userData["payload"])
             self.config["userWalkingSpeed"] = self.userData["userWalkingSpeed"]
-            self.loadBroadCaster(broadcaster)
+            self.addBroadCaster(broadcaster)
             
         if duration is None:
             duration = self.config["simulationPredefinedEndpoint"]

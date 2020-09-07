@@ -3,7 +3,6 @@ import random
 
 class BroadcasterCore:
     
-    
     def __init__(self, address):
         self.intervalMs = None
         self.payload = None

@@ -1,15 +1,19 @@
 from simulator.simulatorBases.BroadcasterCore import BroadcasterCore
+import math
 
 class TrackableDeviceForNca(BroadcasterCore):
 
-    def __init__(self, address):
+    def __init__(self, address, gui):
         super().__init__(address="address")
+        self.gui = gui
+        self.path = None
+
         self.pathIndex = 0
         self.pathTime = 0
         self.time = 0
 
         self.pathFinished = False
-        self.pos = [self.gui.simUserMovement.path[0][0], self.gui.simUserMovement.path[0][1]]
+        self.pos = [0, 0] # don't have an initial estimate..
 
     def getRssiToCrownstone(self, targetCrownstoneId):
         # get xyz coords of crownstoneId
@@ -17,6 +21,11 @@ class TrackableDeviceForNca(BroadcasterCore):
         # calculate position of user
         rssi = self.gui.simMath.getRssiUserToCrownstone(targetCrownstone.pos, self.pos)
         return rssi
+
+    def generateMessage(self, targetCrownstoneId):
+        retval = super().generateMessage(targetCrownstoneId)
+        print("trackable message generated")
+        return retval
 
     def tick(self, simulationTime):
         """
