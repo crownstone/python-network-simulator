@@ -99,16 +99,23 @@ class SimulationGui(GuiCore):
      
     def loadRooms(self, rooms):
         self.rooms = rooms
+
+    def loadBroadCaster(self, broadcaster):
+        if self.userBroadcaster is not None:
+            # cleanup?
+            self.userBroadcaster = None
+
+        self.userBroadcaster = broadcaster
+        self.simulator.loadBroadcasters([self.userBroadcaster])
         
     def startSimulation(self, duration = None):
         # allow for no user
-        if self.userData is not None:
-            self.userBroadcaster = SimUserBroadcaster(self.userData["address"], self)
-            self.userBroadcaster.setBroadcastParameters(intervalMs=self.userData["intervalMs"], payload=self.userData["payload"])
+        if self.userData is not None and self.userBroadcaster is None:
+            # try to setup a broadcaster
+            broadcaster = SimUserBroadcaster(self.userData["address"], self)
+            broadcaster.setBroadcastParameters(intervalMs=self.userData["intervalMs"], payload=self.userData["payload"])
             self.config["userWalkingSpeed"] = self.userData["userWalkingSpeed"]
-        
-            self.simulator.loadBroadcasters([self.userBroadcaster])
-            
+            self.loadBroadCaster(broadcaster)
             
         if duration is None:
             duration = self.config["simulationPredefinedEndpoint"]
@@ -218,33 +225,31 @@ class SimulationGui(GuiCore):
         lastPathPoint = None
         pathTime = 0
         userSpeed = self.config["userWalkingSpeed"]
-        pointCount = len(self.simUserMovement.path)
-        if pointCount > 0:
-            colorStart = (180,180,180)
-            
-            counter = 0
-            
-            for pathPoint in self.simUserMovement.path:
-                pos = self.xyMetersToPixels(pathPoint)
-                if lastPos is not None:
-                    color = self._getColor(colorStart, counter)
-                    pygame.draw.line(surf,color,lastPos,pos,2)
-                    dx = pathPoint[0] - lastPathPoint[0]
-                    dy = pathPoint[1] - lastPathPoint[1]
-                    distance = math.sqrt(dx**2 + dy**2)
-                    dt = distance / userSpeed
-                    pathTime += dt
-                    if pointCount - counter < 5 and self.drawUserPathTimes:
-                        self.text(surf, "{:3.1f}".format(pathTime) + 's', color, pos, True)
-                lastPos = pos
-                lastPathPoint = pathPoint
-                counter += 1
 
-            counter = 0
-            for pathPoint in self.simUserMovement.path:
-                pos = self.xyMetersToPixels(pathPoint)
-                self.drawAaCircle(surf, pos,3,self._getColor(colorStart, counter))
-                counter += 1
+        colorStart = (180,180,180)
+
+        counter = 0
+        for pathPoint in self.simUserMovement.path:
+            pos = self.xyMetersToPixels(pathPoint)
+            if lastPos is not None:
+                color = self._getColor(colorStart, counter)
+                pygame.draw.line(surf,color,lastPos,pos,2)
+                dx = pathPoint[0] - lastPathPoint[0]
+                dy = pathPoint[1] - lastPathPoint[1]
+                distance = math.sqrt(dx**2 + dy**2)
+                dt = distance / userSpeed
+                pathTime += dt
+                if len(self.simUserMovement.path) - counter < 5 and self.drawUserPathTimes:
+                    self.text(surf, "{:3.1f}".format(pathTime) + 's', color, pos, True)
+            lastPos = pos
+            lastPathPoint = pathPoint
+            counter += 1
+
+        counter = 0
+        for pathPoint in self.simUserMovement.path:
+            pos = self.xyMetersToPixels(pathPoint)
+            self.drawAaCircle(surf, pos,3,self._getColor(colorStart, counter))
+            counter += 1
                 
         if self.userBroadcaster is not None and self.drawUser:
             pos = self.xyMetersToPixels(self.userBroadcaster.pos)
