@@ -1,0 +1,26 @@
+{
+  "rssiCalibrationCrownstone": -60,
+  "nValueCrownstone": 3,
+  "rssiMinimumCrownstone": -98,
+
+  "rssiCalibrationUser": -60,
+  "nValueUser": 3,
+  "rssiMinimumUser": -98,
+
+  "rssiNoiseFactor": 0.1,
+  "messageLossProbability": 0.25,
+
+  "transmissionDelayInSeconds": 0.1,
+
+  "simulateOutsideRooms": true,
+  "userWalkingSpeed": 1.1,
+  "simulationPredefinedEndpoint": 0,
+  "simulationBatchTimeStepSizeSeconds": 100,
+  "trainingPhaseDurationSeconds": 50,
+  "simulationForMeasurementResultMaxSeconds":10,
+  "simulationTimeStepSeconds": 0.01,
+
+  "viewWidthMeters": 20,
+  "viewHeightMeters": 18,
+  "viewPaddingMeters": 2
+}
