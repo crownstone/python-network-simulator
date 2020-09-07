@@ -4,7 +4,8 @@ from pathlib import Path
 # this is used for profiling
 basePath = sys.path[0]
 if sys.path[0] == '':
-    basePath = "/Users/alex/Dropbox/DoBots/Projects/Python/NetworkSimulator/examples"
+    print("sys.path[0] is empty...")
+    quit()
     
     
 # Because python searches for local imports in the sys.path folders, we need to add the root folder of this project to

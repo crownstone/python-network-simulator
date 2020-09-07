@@ -7,7 +7,7 @@ import math, time
 class SimUserBroadcaster(BroadcasterCore):
     
     def __init__(self, address, gui):
-        super().__init__(address="address")
+        super().__init__(address=address)
         self.gui = gui
         self.path = None
 

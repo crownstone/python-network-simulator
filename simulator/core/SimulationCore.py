@@ -219,7 +219,7 @@ class SimulationCore:
             return MessageState.UNREACHABLE
         else:
             # deliver the message
-            # the ttl has been reduced by 1 since it has been sent once.
+            # the ttl is reduced by 1 since it has been sent once.
             self.receivedCounter += 1
             receiver.receiveMessage({"sender": message["senderId"], "payload": message["payload"], "ttl": message["ttl"] - 1}, rssi)
             
