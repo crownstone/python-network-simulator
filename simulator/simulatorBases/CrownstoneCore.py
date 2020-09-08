@@ -1,7 +1,7 @@
 from simulator.topics.Topics import Topics
+from simulator.simulatorBases.SimulationComponent import SimulationComponent
 
-
-class CrownstoneCore:
+class CrownstoneCore(SimulationComponent):
     def __init__(self, id):
         self.id = id
         self.eventBus = None

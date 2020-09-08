@@ -224,17 +224,17 @@ class SimulationCore:
         else:
             # deliver the message
             # the ttl is reduced by 1 since it has been sent once.
-            self.receivedCounter += 1
-            receiver.receiveMessage({"sender": message["senderId"], "payload": message["payload"], "ttl": message["ttl"] - 1}, rssi)
-            
-            if random.random() < float(self.config["messageLossProbability"]) or True:
+            if random.random() < float(self.config["messageLossProbability"]):
                 message["repeat"] -= 1
                 if message["repeat"] < 0:
                     return MessageState.FAILED
                 
                 return MessageState.DELAYED
-            
-            
+
+            self.receivedCounter += 1
+            receiver.receiveMessage(
+                {"sender": message["senderId"], "payload": message["payload"], "ttl": message["ttl"] - 1}, rssi)
+
             if message["ttl"] > 1:
                 return MessageState.DELIVERED
             else:

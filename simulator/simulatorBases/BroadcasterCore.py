@@ -1,7 +1,8 @@
 from simulator.Exceptions import SimulatorException, SimulatorError
 import random
+from simulator.simulatorBases.SimulationComponent import SimulationComponent
 
-class BroadcasterCore:
+class BroadcasterCore(SimulationComponent):
     
     def __init__(self, address):
         self.intervalMs = None

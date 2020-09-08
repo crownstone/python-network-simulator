@@ -1,8 +1,8 @@
 from simulator.Exceptions import SimulatorException, SimulatorError
 from simulator.topics.Topics import Topics
+from simulator.simulatorBases.SimulationComponent import SimulationComponent
 
-
-class InteractionCore:
+class InteractionCore(SimulationComponent):
     
     
     def __init__(self, name = "USER"):
