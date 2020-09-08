@@ -10,6 +10,8 @@ class SimulationCore:
     def __init__(self):
         self.interactionModule = None
         self.crownstones = []
+        self.components = [] # : List[SimulationComponent]
+
         self.crownstoneMap = {}
         self.deliveredCrownstoneMap = {}
         self.deliveredMessageMap = {}
@@ -103,7 +105,9 @@ class SimulationCore:
     def addBroadcaster(self, broadcaster):
         self.broadcasters += [broadcaster]
         self.broadcasters[-1].loadEventBus(self.eventBus)
-            
+
+    def addSimulationComponent(self, component):
+        self.components.append(component)
             
     def resetSimulatorForResults(self):
         self.broadcasters = []
@@ -167,6 +171,9 @@ class SimulationCore:
         # first step is for the simulation interaction module to do things.
         if self.interactionModule is not None:
             self.interactionModule.tick(self.t)
+
+        for component in self.components:
+            component.tick(self.t)
         
         # second step is to ask all broadcasters to send a message
         for broadcaster in self.broadcasters:

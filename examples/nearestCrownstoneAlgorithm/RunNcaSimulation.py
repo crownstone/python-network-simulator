@@ -1,5 +1,6 @@
 # we need to import this in order to be able to import the simulator
 # it does not have to do anything other than be imported.
+from examples.nearestCrownstoneAlgorithm.SimulationInspector import SimulationInspector
 from examples.util import path
 
 from examples.originalExample.exampleCrownstones.SimulatorCrownstone import SimulatorCrownstone
@@ -26,7 +27,7 @@ simulationBroadcaster.setBroadcastParameters(intervalMs=userModule["intervalMs"]
 ### mesh topology
 
 
-### Broadcaster
+
 
 # create a custom interaction module
 
@@ -42,7 +43,13 @@ b = Simulator()
 b.loadInteractionModule(TrainingAndTesting("Test"))
 b.loadCrownstones(simulatorCrownstones)
 b.loadConfig(config)
+
 a.loadSimulator(b) # this will load the user module into the simulator as a broadcaster.
+
+
+# simulation components:
+inspector = SimulationInspector(1., b) # create an inspector for b.
+b.addSimulationComponent(inspector) # add inspector for b to b.
 
 a.addBroadCaster(simulationBroadcaster) # can only be added after simulator is loaded atm, as broadcaster needs to be put into that.
 
